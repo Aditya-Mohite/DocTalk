@@ -32,14 +32,16 @@ const UploadDropzone = () => {
     // destructure from uploadthing from lib folder
     const { startUpload } = useUploadThing('pdfUploader')
 
-    const { mutate: startPolling } = trpc.getFile.useMutation({
+    const { mutate: startPolling } = trpc.getFile.useMutation(
+        {
         onSuccess: (file) => {
-            // redirect to detailed view of the pdf 
+            // redirect to detailed view of the pdf   
             router.push(`/dashboard/${file.id}`)
         },
         retry: true,   // we get the response until we have the file in the database
         retryDelay: 500 // 500 milisecond half of second
-    })
+    }
+)
 
     // this function starts as soon as the user starts uploading the file 
     const startSimulatedProgress = () => {
@@ -58,24 +60,24 @@ const UploadDropzone = () => {
     }
 
     return (
-        <Dropzone multiple={false}
+        <Dropzone 
+        multiple={false}
             onDrop={async (acceptedFile) => {
                 setIsUploading(true)
-                // start progress track as soon as the file is started uploading
+                // start progress track as soon as the file is started uploading 
                 const progressInterval = startSimulatedProgress()
 
-                await new Promise((resolve) => setTimeout(resolve, 2000))
+                // await new Promise((resolve) => setTimeout(resolve, 2000))
 
                 // handle file uploading
-                // start uploading as sson as the file is get selected
-                const res = await startUpload(acceptedFile).catch((error) => {
-                    console.error('Upload error', error);
-                })
+                // start uploading as soon as the file is get selected
+                const res = await startUpload(acceptedFile) 
+
                 if (!res) {
                     return toast({
                         title: 'Something went wrong',
                         description: 'Please try again later',
-                        variant: 'destructive'
+                        variant: 'destructive',
                     })
                 }
 
@@ -85,7 +87,7 @@ const UploadDropzone = () => {
                     return toast({
                         title: 'Something went wrong',
                         description: 'Please try again later',
-                        variant: 'destructive'
+                        variant: 'destructive',
                     })
                 }
 

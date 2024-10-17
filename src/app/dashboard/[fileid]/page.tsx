@@ -9,6 +9,7 @@ import { db } from "@/db"
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server"
 import { notFound, redirect } from "next/navigation"
 
+
 interface PageProps {
     params: {
         fileid: string
@@ -34,12 +35,17 @@ const Page = async ({params}: PageProps) => {
             userId: user.id,
         },
     })
-    console.log(user.id)
-    console.log(fileid)
+    // console.log(user.id)
+    // console.log(fileid)
+
+    // const baseurl = `https://utfs.io/f/${file.key}`
 
     console.log(file);
 
-    if(!file || !file.url) notFound()
+    if(!file || !file.url){
+        console.error('File not found or URL missing', { fileid, userId: user.id });
+        notFound()
+    } 
 
     return (
         <div className="flex-1 justify-between flex flex-col h-[calc(100vh-3.5rem)]">

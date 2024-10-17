@@ -65,8 +65,8 @@ export const appRouter = router({
         const file = await db.file.findFirst({
             where: {
                 key: input.key,
-                userId
-            }
+                userId,
+            },
         })
         // if file is not in the database
         if(!file) throw new TRPCError({code: "NOT_FOUND"})

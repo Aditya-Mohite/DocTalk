@@ -29,11 +29,21 @@ export const ourFileRouter = {
           userId: metadata.userId, 
           // url: file.url  -->> we aren't using this as this may give session time out error some times
           // so we are using the file.url from the amazon s3 server from the uploadthing
-          url: `https://uploadthing-prod.s3.us-west-2.amazonaws.com/${file.key}`,
-          // url: file.url,
+          // url: `https://uploadthing-prod.s3.us-west-2.amazonaws.com/${file.key}`,
+          url: `https://utfs.io/f/${file.key}`,
+          // url: file.key,
           uploadStatus: "PROCESSING",
         },
-      })
+      });
+      // console.log('sakdgjs Uploaded File URL: https://utfs.io/f/${file.key}');
+      // return { uploadedBy: file.url };
+
+      // update status
+      await db.file.update({
+        where: { id: createdFile.id },
+        data: { uploadStatus: "COMPLETED" },
+      });
+
     }),
 } satisfies FileRouter;
 
