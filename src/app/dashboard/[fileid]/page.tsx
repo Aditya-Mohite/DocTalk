@@ -1,9 +1,9 @@
 // This Page is made using dynamic route
 // This page will show the pdf when we open it from dashboard
-// PDF will be fetched from teh database using the file id 
-// this has the pdf view and chat sections
+// PDF will be fetched from the database using the file id 
+// this is having the pdf view and chat sections
 
-import ChatWrapper from "@/components/ChatWrapper"
+import ChatWrapper from "@/components/chat/ChatWrapper"
 import PdfRender from "@/components/PdfRender"
 import { db } from "@/db"
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server"
@@ -64,7 +64,7 @@ const Page = async ({params}: PageProps) => {
                 {/* Right hand side chat window  */}
                 <div className="shrink-0 flex-[0.75] border-t border-gray-200 lg:w-96 lg:border-l lg:border-t-0">
                     {/* new chat wrapper component */}
-                    <ChatWrapper />
+                    <ChatWrapper fileId={file.id}/>
                 </div>
 
             </div>
